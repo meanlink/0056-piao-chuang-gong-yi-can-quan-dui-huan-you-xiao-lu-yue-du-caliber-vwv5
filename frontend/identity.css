@@ -1,0 +1,6 @@
+:root { --s-page:oklch(95% .025 112);--s-panel:oklch(98% .012 111);--s-accent:oklch(42% .102 137);--s-ink:oklch(25% .035 137); }
+.ticket { padding:1.15rem; border:1px dashed var(--s-accent); display:grid; grid-template-columns:1fr auto; align-items:center; gap:.8rem; background:var(--s-panel); }
+.ticket small { display:block; }
+.ticket + .ticket { margin-top:.75rem; }
+.ticket strong { font-family:var(--s-display); }
+.lineup { max-width:66rem; }
