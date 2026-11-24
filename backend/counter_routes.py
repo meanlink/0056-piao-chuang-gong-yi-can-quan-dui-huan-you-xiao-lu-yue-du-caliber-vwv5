@@ -9,7 +9,12 @@ router=APIRouter(prefix="/counter")
 def list_receipts(_=Depends(require())):
     with db() as cx:
         return cx.execute("""
-          SELECT r.*,x.reason,x.approved_by FROM meal_redemptions r LEFT JOIN meal_reversals x ON x.redemption_id=r.id
+          SELECT r.*,x.reason,x.approved_by,x.reversed_on,x.supplement_month AS reversal_month,
+                 d.month AS deduction_month,d.original_month,
+                 CASE WHEN d.redemption_id IS NOT NULL THEN true ELSE false END AS backfilled
+          FROM meal_redemptions r
+          LEFT JOIN meal_reversals x ON x.redemption_id=r.id
+          LEFT JOIN meal_deductions d ON d.redemption_id=r.id
           ORDER BY r.id DESC LIMIT 300
         """).fetchall()
 
